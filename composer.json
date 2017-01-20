@@ -1,0 +1,16 @@
+{
+  "name": "adw/config-bundle",
+  "authors": [
+    {
+      "name": "Anton Prokhorov",
+      "email": "vziks@live.ru"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "sonata-project/admin-bundle": "^3.1"
+  },
+  "autoload": {
+    "psr-4": { "ADW\\ConfigBundle\\": "" }
+  }
+}

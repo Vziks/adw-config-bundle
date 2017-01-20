@@ -1,0 +1,18 @@
+services:
+    adw.configsite.config:
+        class: ADW\ConfigBundle\Admin\ConfigSiteAdmin
+        arguments: [~, ADW\ConfigBundle\Entity\ConfigSite, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Config", label: Настройка сайта }
+
+    adw.listener.configrequestresponse:
+        class: ADW\ConfigBundle\EventListener\RequestListener
+        arguments:
+            - ~
+            - @service_container
+            - @doctrine.orm.entity_manager
+            - @twig
+            - @security.token_storage
+            - "%kernel.environment%"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
