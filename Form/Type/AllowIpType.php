@@ -2,9 +2,10 @@
 
 namespace ADW\ConfigBundle\Form\Type;
 
+use ADW\ConfigBundle\Entity\AllowIp;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class AllowIpType.
@@ -21,12 +22,25 @@ class AllowIpType extends AbstractType
         $builder->add('name', 'text');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    /**
+     * @inheritDoc
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults(array(
-            'data_class' => 'ADW\ConfigBundle\Entity\AllowIp',
-            'cascade_validation' => true,
+            'data_class' => AllowIp::class
         ));
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'allowip';
     }
 
 }

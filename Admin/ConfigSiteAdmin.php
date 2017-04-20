@@ -2,10 +2,12 @@
 
 namespace ADW\ConfigBundle\Admin;
 
+use ADW\ConfigBundle\Entity\AllowIp;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use ADW\ConfigBundle\Form\Type\AllowIpType;
@@ -60,16 +62,13 @@ class ConfigSiteAdmin extends AbstractAdmin
             ->add('turn_off')
             ->add('startAt')
             ->add('stopAt')
-            ->add('allowips','collection', array(
-                'type' => new AllowIpType(),
+            ->add('allowips',CollectionType::class,[
+                'entry_type'   => AllowIpType::class,
                 'allow_add'   => true,
-                'allow_delete' => true,
-                'prototype' => true,
                 'by_reference' => false,
-                'options' => array('data_class' => 'ADW\ConfigBundle\Entity\AllowIp'),
-                )
-            )
-
+                'allow_delete' => true,
+                'prototype' => true
+            ])
         ;
     }
 

@@ -31,4 +31,13 @@ class AllowIp
         $this->name = $name;
     }
 
+    /**
+     * @inheritDoc
+     */
+    function __toString()
+    {
+       return $this->getName();
+    }
+
+
 }
