@@ -89,7 +89,7 @@ class RequestListener
             return;
         }
 
-        if ($this->currentEnv == 'dev') {
+        if (in_array($this->currentEnv, ['dev','test'])) {
             return;
         }
 
