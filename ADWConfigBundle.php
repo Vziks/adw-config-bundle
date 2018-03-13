@@ -16,12 +16,12 @@ class ADWConfigBundle extends Bundle
     /**
      * @param ContainerBuilder $container
      */
-    public function build(ContainerBuilder $container) {
+    public function build(ContainerBuilder $container)
+    {
         // call parent
         parent::build($container);
 
         // run extra compilerPass
         $container->addCompilerPass(new SecureCompilerPass());
     }
-
 }

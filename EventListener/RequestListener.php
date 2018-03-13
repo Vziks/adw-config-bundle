@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use ADW\ConfigBundle\Entity\ConfigSite;
 
-
 /**
  * Class RequestListener.
  * Project ConfigBundle.
@@ -20,7 +19,6 @@ use ADW\ConfigBundle\Entity\ConfigSite;
  */
 class RequestListener
 {
-
 
     /**
      * @var array
@@ -84,7 +82,6 @@ class RequestListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-
         if (!$event->isMasterRequest()) {
             return;
         }
@@ -97,28 +94,30 @@ class RequestListener
 
         $matcher = new RequestMatcher();
 
-        // get rules
+        // Get rules
         $rules = isset($this->configuration["rules"]) ? $this->configuration["rules"] : [];
 
         $include = false;
 
         $currentDate = new \DateTime('now');
 
-        /*
-         * @var ConfigSite $status_site
+        /**
+         * @var ConfigSite $statusSite
          */
-        $status_site = $this->em->getRepository(ConfigSite::class)->createQueryBuilder('c')
+        $statusSite = $this->em->getRepository(ConfigSite::class)->createQueryBuilder('c')
             ->where('c.turn_off=:turnOff')
-            ->andWhere('c.startAt <= :currentdate')
-            ->andWhere('c.stopAt >= :currentdate')
-            ->setParameter('currentdate', $currentDate->format('Y-m-d H:m:s'))
-            ->setParameter('turnOff', 1)
+            ->andWhere('c.startAt <= :currentDate')
+            ->andWhere('c.stopAt >= :currentDate')
+            ->setParameters(
+                [
+                    'currentDate' => $currentDate->format('Y-m-d H:m:s'),
+                    'turnOff' => 1
+                ]
+            )
             ->getQuery()
             ->getOneOrNullResult();
 
-
         foreach ($this->firewallMap as $firewall => $key) {
-
             $matcher->matchPath($key);
 
             foreach ($rules as $rule) {
@@ -128,10 +127,10 @@ class RequestListener
             }
         }
 
-        if (!$include and $status_site and !in_array($request->getClientIp(), $status_site->getAllowIps())) {
-            $response = new Response($this->twig->render('ADWConfigBundle:SplashScreen:index.html.twig', []), 503);
+        if (!$include and $statusSite and !in_array($request->getClientIp(), $statusSite->getAllowIps())) {
+            $response = new Response($this->twig->render('ADWConfigBundle:SplashScreen:index.html.twig', []), 403);
+
             $event->setResponse($response);
         }
     }
-
 }

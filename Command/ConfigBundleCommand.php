@@ -12,7 +12,6 @@ use ADW\ConfigBundle\Entity\AllowIp;
 use ADW\ConfigBundle\Entity\ConfigSite;
 use Doctrine\ORM\Tools\SchemaTool;
 
-
 /**
  * Class ConfigBundleCommand.
  * Project ConfigBundle.
@@ -21,12 +20,10 @@ use Doctrine\ORM\Tools\SchemaTool;
 class ConfigBundleCommand extends ContainerAwareCommand
 {
 
-
     /**
      * @var EntityManager $em
      */
     private $em;
-
 
     /**
      * @inheritdoc
@@ -44,7 +41,6 @@ class ConfigBundleCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $tool = new SchemaTool($this->em);
@@ -88,20 +84,31 @@ class ConfigBundleCommand extends ContainerAwareCommand
             $output->writeln('-------------------------');
             $output->writeln('<error>Error write record!</error>');
         }
-
     }
 
     /**
-     * @param $entity
+     * @param ConfigSite $entity
      * @return mixed
      */
-    protected function truncateTable($entity)
+    protected function truncateTable(ConfigSite $entity)
     {
-        $table = $this->em->getClassMetadata($entity)->getTableName();
-        $sql = "TRUNCATE TABLE $table";
-        $stmt = $this->em->getConnection()->prepare($sql);
 
-        return $stmt->execute();
+        $classMetaData = $this->em->getClassMetadata($entity);
+        $connection = $this->em->getConnection();
+
+        $dbPlatform = $connection->getDatabasePlatform();
+        $connection->beginTransaction();
+
+        try {
+            $connection->query('SET FOREIGN_KEY_CHECKS=0');
+            $q = $dbPlatform->getTruncateTableSql($classMetaData->getTableName());
+            $connection->executeUpdate($q);
+            $connection->query('SET FOREIGN_KEY_CHECKS=1');
+            return $connection->commit();
+        }
+        catch (\Exception $e) {
+            $connection->rollback();
+        }
+
     }
-
 }

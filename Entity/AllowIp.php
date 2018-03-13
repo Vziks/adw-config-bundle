@@ -34,10 +34,8 @@ class AllowIp
     /**
      * @inheritDoc
      */
-    function __toString()
+    public function __toString()
     {
-       return $this->getName();
+        return $this->getName();
     }
-
-
 }

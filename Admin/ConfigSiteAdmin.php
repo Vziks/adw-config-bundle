@@ -14,21 +14,12 @@ use ADW\ConfigBundle\Form\Type\AllowIpType;
 
 /**
  * Class ConfigSiteAdmin.
- * Project proplan.
+ * Project ConfigBundle.
  * @author Anton Prokhorov
  */
 
 class ConfigSiteAdmin extends AbstractAdmin
 {
-
-    /**
-     * @inheritdoc
-     */
-    protected function configureRoutes(RouteCollection $collection)
-    {
-        $collection->clearExcept(['list', 'edit']);
-        parent::configureRoutes($collection);
-    }
 
     /**
      * @param DatagridMapper $datagridMapper
@@ -62,7 +53,7 @@ class ConfigSiteAdmin extends AbstractAdmin
             ->add('turn_off')
             ->add('startAt')
             ->add('stopAt')
-            ->add('allowips',CollectionType::class,[
+            ->add('allowips', CollectionType::class, [
                 'entry_type'   => AllowIpType::class,
                 'allow_add'   => true,
                 'by_reference' => false,
@@ -82,5 +73,4 @@ class ConfigSiteAdmin extends AbstractAdmin
             ->add('name')
         ;
     }
-
 }

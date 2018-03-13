@@ -9,12 +9,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class AllowIpType.
- * Project proplan.
+ * Project ConfigBundle.
  * @author Anton Prokhorov
  */
 class AllowIpType extends AbstractType
 {
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -23,7 +26,7 @@ class AllowIpType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -34,7 +37,6 @@ class AllowIpType extends AbstractType
         ));
     }
 
-
     /**
      * @return string
      */
@@ -42,5 +44,4 @@ class AllowIpType extends AbstractType
     {
         return 'allowip';
     }
-
 }

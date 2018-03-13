@@ -25,9 +25,8 @@ class ADWConfigExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $definition = $container->getDefinition("adw.listener.configrequestresponse");
+        $definition = $container->getDefinition("adw.event_listener.request_listener");
+//        $definition = $container->getDefinition("adw.listener.configrequestresponse");
         $definition->addArgument($config);
-
-
     }
 }

@@ -1,11 +1,11 @@
 services:
-    adw.configsite.config:
+    adw.admin.config_site_admin:
         class: ADW\ConfigBundle\Admin\ConfigSiteAdmin
         arguments: [~, ADW\ConfigBundle\Entity\ConfigSite, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Config", label: Site settings }
 
-    adw.listener.configrequestresponse:
+    adw.event_listener.request_listener:
         class: ADW\ConfigBundle\EventListener\RequestListener
         arguments:
             - ~

@@ -197,6 +197,4 @@ class ConfigSite
         $this->stopAt = $stopAt;
         return $this;
     }
-
-
 }

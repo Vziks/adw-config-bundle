@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class SecureCompilerPass.
- * Project proplan.
+ * Project ConfigBundle.
  * @author Anton Prokhorov
  */
 class SecureCompilerPass implements CompilerPassInterface
@@ -23,7 +23,6 @@ class SecureCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-
         $secure = [];
 
         $securityConfig = $container->getExtensionConfig('security');
@@ -32,7 +31,6 @@ class SecureCompilerPass implements CompilerPassInterface
             $secure[$firewallsName] = $firewallsConfig['pattern'];
         }
 
-        $container->getDefinition('adw.listener.configrequestresponse')->replaceArgument(0, $secure);
-
+        $container->getDefinition('adw.event_listener.request_listener')->replaceArgument(0, $secure);
     }
 }
