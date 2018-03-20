@@ -86,6 +86,10 @@ class RequestListener
             return;
         }
 
+        if (in_array($this->currentEnv, ['dev','test'])) {
+            return;
+        }
+
         $request = $event->getRequest();
 
         $matcher = new RequestMatcher();
