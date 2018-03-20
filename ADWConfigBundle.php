@@ -9,6 +9,7 @@ use ADW\ConfigBundle\DependencyInjection\SecureCompilerPass;
 /**
  * Class ADWConfigBundle.
  * Project ConfigBundle.
+ *
  * @author Anton Prokhorov
  */
 class ADWConfigBundle extends Bundle

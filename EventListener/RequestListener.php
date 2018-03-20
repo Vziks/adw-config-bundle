@@ -3,9 +3,7 @@
 namespace ADW\ConfigBundle\EventListener;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -15,11 +13,11 @@ use ADW\ConfigBundle\Entity\ConfigSite;
 /**
  * Class RequestListener.
  * Project ConfigBundle.
+ *
  * @author Anton Prokhorov
  */
 class RequestListener
 {
-
     /**
      * @var array
      */
@@ -45,9 +43,8 @@ class RequestListener
      */
     protected $tokenStorage;
 
-
     /**
-     * @var string $currentEnv
+     * @var string
      */
     private $currentEnv;
 
@@ -58,10 +55,11 @@ class RequestListener
 
     /**
      * RequestListener constructor.
+     *
      * @param $firewallMap
-     * @param ContainerInterface $container
-     * @param EntityManager $em
-     * @param \Twig_Environment $twig
+     * @param ContainerInterface    $container
+     * @param EntityManager         $em
+     * @param \Twig_Environment     $twig
      * @param TokenStorageInterface $tokenStorage
      * @param $currentEnv
      * @param array $configuration
@@ -86,7 +84,7 @@ class RequestListener
             return;
         }
 
-        if (in_array($this->currentEnv, ['dev','test'])) {
+        if (in_array($this->currentEnv, ['dev', 'test'])) {
             return;
         }
 
@@ -95,14 +93,14 @@ class RequestListener
         $matcher = new RequestMatcher();
 
         // Get rules
-        $rules = isset($this->configuration["rules"]) ? $this->configuration["rules"] : [];
+        $rules = isset($this->configuration['rules']) ? $this->configuration['rules'] : [];
 
         $include = false;
 
         $currentDate = new \DateTime('now');
 
         /**
-         * @var ConfigSite $statusSite
+         * @var ConfigSite
          */
         $statusSite = $this->em->getRepository(ConfigSite::class)->createQueryBuilder('c')
             ->where('c.turn_off=:turnOff')
@@ -111,7 +109,7 @@ class RequestListener
             ->setParameters(
                 [
                     'currentDate' => $currentDate->format('Y-m-d H:m:s'),
-                    'turnOff' => 1
+                    'turnOff' => 1,
                 ]
             )
             ->getQuery()
@@ -121,7 +119,7 @@ class RequestListener
             $matcher->matchPath($key);
 
             foreach ($rules as $rule) {
-                if ($rule['rule'] == '-' and $matcher->matches($request) and in_array($firewall, $rule['firewalls'])) {
+                if ('-' == $rule['rule'] and $matcher->matches($request) and in_array($firewall, $rule['firewalls'])) {
                     $include = true;
                 }
             }

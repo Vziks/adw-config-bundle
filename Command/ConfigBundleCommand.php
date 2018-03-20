@@ -1,4 +1,5 @@
 <?php
+
 namespace ADW\ConfigBundle\Command;
 
 use Doctrine\ORM\EntityManager;
@@ -7,7 +8,6 @@ use Doctrine\ORM\Tools\ToolsException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
 use ADW\ConfigBundle\Entity\AllowIp;
 use ADW\ConfigBundle\Entity\ConfigSite;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -15,18 +15,18 @@ use Doctrine\ORM\Tools\SchemaTool;
 /**
  * Class ConfigBundleCommand.
  * Project ConfigBundle.
+ *
  * @author Anton Prokhorov
  */
 class ConfigBundleCommand extends ContainerAwareCommand
 {
-
     /**
-     * @var EntityManager $em
+     * @var EntityManager
      */
     private $em;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -36,7 +36,7 @@ class ConfigBundleCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,9 +45,9 @@ class ConfigBundleCommand extends ContainerAwareCommand
 
         $tool = new SchemaTool($this->em);
 
-        $classes = array(
-            $this->em->getClassMetadata(ConfigSite::class)
-        );
+        $classes = [
+            $this->em->getClassMetadata(ConfigSite::class),
+        ];
 
         try {
             $output->writeln('Create table for Bundle');
@@ -88,11 +88,11 @@ class ConfigBundleCommand extends ContainerAwareCommand
 
     /**
      * @param ConfigSite $entity
+     *
      * @return mixed
      */
     protected function truncateTable(ConfigSite $entity)
     {
-
         $classMetaData = $this->em->getClassMetadata($entity);
         $connection = $this->em->getConnection();
 
@@ -104,11 +104,10 @@ class ConfigBundleCommand extends ContainerAwareCommand
             $q = $dbPlatform->getTruncateTableSql($classMetaData->getTableName());
             $connection->executeUpdate($q);
             $connection->query('SET FOREIGN_KEY_CHECKS=1');
+
             return $connection->commit();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $connection->rollback();
         }
-
     }
 }

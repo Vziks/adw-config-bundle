@@ -5,9 +5,9 @@ namespace ADW\ConfigBundle\Entity;
 /**
  * Class AllowIp.
  * Project ConfigBundle.
+ *
  * @author Anton Prokhorov
  */
-
 class AllowIp
 {
     /**
@@ -31,9 +31,6 @@ class AllowIp
         $this->name = $name;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function __toString()
     {
         return $this->getName();

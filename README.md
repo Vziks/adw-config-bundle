@@ -1,4 +1,5 @@
 # Что такое? #
+
 Отключение сайт при помощи адмики
 
 # Установка #
@@ -30,20 +31,18 @@ adw_config:
         # "-" на какие не распространять
 
 AppKernel.php:
-
 ```
-## Консоль
 
-Добавление таблиц в БД 
-
-```
-#!bash
-php app/console adw:config:install
-
-```
 
 ##!php
 $bundles = [
    new ADW\ConfigBundle\ADWConfigBundle()
 ];
+
+###or
+
+
+return [
+    \ADW\ConfigBundle\ADWConfigBundle::class => ['all' => true],
+]; 
 

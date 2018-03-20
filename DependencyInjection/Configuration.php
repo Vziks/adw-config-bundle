@@ -8,6 +8,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 /**
  * Class Configuration.
  * Project ConfigBundle.
+ *
  * @author Anton Prokhorov
  */
 class Configuration implements ConfigurationInterface
@@ -22,7 +23,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode("rules")
+                ->arrayNode('rules')
                     ->prototype('array')
                         ->children()
                             ->enumNode('rule')->isRequired()->cannotBeEmpty()->values(['+', '-'])->end()

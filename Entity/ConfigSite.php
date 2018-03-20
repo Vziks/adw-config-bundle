@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ADW\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -8,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class ConfigSite.
  * Project ConfigBundle.
+ *
  * @author Anton Prokhorov
  *
  * @ORM\Entity()
@@ -15,9 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ConfigSite
 {
-
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -32,7 +31,6 @@ class ConfigSite
      */
     protected $name;
 
-
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
@@ -41,10 +39,8 @@ class ConfigSite
     /**
      * @var array
      * @ORM\Column(name="allowips", type="array", nullable=true)
-     *
      */
     protected $allowips;
-
 
     /**
      * @var \DateTime
@@ -60,7 +56,6 @@ class ConfigSite
      */
     private $stopAt;
 
-
     /**
      * @return int
      */
@@ -71,11 +66,13 @@ class ConfigSite
 
     /**
      * @param int $id
+     *
      * @return ConfigSite
      */
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -89,11 +86,13 @@ class ConfigSite
 
     /**
      * @param mixed $name
+     *
      * @return ConfigSite
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -107,17 +106,19 @@ class ConfigSite
 
     /**
      * @param mixed $turn_off
+     *
      * @return ConfigSite
      */
     public function setTurnOff($turn_off)
     {
         $this->turn_off = $turn_off;
+
         return $this;
     }
 
-
     /**
      * @param AllowIp $allowip
+     *
      * @return $this
      */
     public function addAllowIp(AllowIp $allowip)
@@ -129,6 +130,7 @@ class ConfigSite
 
     /**
      * @param $allowip
+     *
      * @return $this
      */
     public function removeAllowIp($allowip)
@@ -172,11 +174,13 @@ class ConfigSite
 
     /**
      * @param \DateTime $startAt
+     *
      * @return ConfigSite
      */
     public function setStartAt($startAt)
     {
         $this->startAt = $startAt;
+
         return $this;
     }
 
@@ -190,11 +194,13 @@ class ConfigSite
 
     /**
      * @param \DateTime $stopAt
+     *
      * @return ConfigSite
      */
     public function setStopAt($stopAt)
     {
         $this->stopAt = $stopAt;
+
         return $this;
     }
 }

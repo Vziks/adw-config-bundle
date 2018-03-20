@@ -2,19 +2,19 @@
 
 namespace ADW\ConfigBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class SecureCompilerPass.
  * Project ConfigBundle.
+ *
  * @author Anton Prokhorov
  */
 class SecureCompilerPass implements CompilerPassInterface
 {
     /**
-     * @var array $secure
+     * @var array
      */
     protected $secure;
 
