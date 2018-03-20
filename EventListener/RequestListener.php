@@ -86,10 +86,6 @@ class RequestListener
             return;
         }
 
-        if (in_array($this->currentEnv, ['dev','test'])) {
-            return;
-        }
-
         $request = $event->getRequest();
 
         $matcher = new RequestMatcher();
@@ -127,10 +123,12 @@ class RequestListener
             }
         }
 
-        if (!$include and $statusSite and !in_array($request->getClientIp(), $statusSite->getAllowIps())) {
-            $response = new Response($this->twig->render('ADWConfigBundle:SplashScreen:index.html.twig', []), 403);
+        if (!$include and $statusSite) {
+            if (!in_array($request->getClientIp(), $statusSite->getAllowIps())) {
+                $response = new Response($this->twig->render('ADWConfigBundle:SplashScreen:index.html.twig', []), 403);
 
-            $event->setResponse($response);
+                $event->setResponse($response);
+            }
         }
     }
 }
